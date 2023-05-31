@@ -10,6 +10,7 @@ build_job:
   image: php:7.4-cli
   before_script:
     - apt-get update && apt-get install -y git unzip
+    - cp .env.example .env
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
     - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
     - php -r "unlink('composer-setup.php');"
@@ -21,7 +22,7 @@ build_job:
   artifacts:
     expire_in: 1 week  # save gitlab server space, we copy the files we need to deploy folder later on
     paths:
-      - ./build/
+      - ./bin/
 
 deploy_job:
   stage: deploy
@@ -31,7 +32,7 @@ deploy_job:
   dependencies:
     - build_job
   before_script:
-    - 'cd build'
+    - 'cd bin'
     - 'zip -r ./artifacts.zip .'
     - 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID'
     - 'az account set --subscription $AZURE_SUBSCRIPTION_ID'
