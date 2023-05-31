@@ -9,7 +9,7 @@ build_job:
     - build
   image: php:7.3
   script:
-    - composer install --no-interaction --no-dev --prefer-dist 
+    - composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
 
   artifacts:
