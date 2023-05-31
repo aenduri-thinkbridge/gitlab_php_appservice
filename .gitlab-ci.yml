@@ -15,7 +15,7 @@ build_job:
     - php -r "unlink('composer-setup.php');"
     
   script:
-      - cp .env.example .env
+      
       - composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
   artifacts:
