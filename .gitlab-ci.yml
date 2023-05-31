@@ -7,7 +7,7 @@ build_job:
   stage: build  # the build process will only be started by git tag commits
   tags:
     - build
-  image: php:8.0-cli
+  image: php:7.4-cli
   before_script:
     - apt-get update && apt-get install -y git unzip
     - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
